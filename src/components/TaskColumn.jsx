@@ -1,0 +1,52 @@
+import React from "react";
+import Todo from "../assets/direct-hit.png";
+
+import "./TaskColumn.css";
+import TaskCard from "./TaskCard";
+import DropArea from "./DropArea";
+
+import { Button, Modal, Form } from "react-bootstrap";
+
+const TaskColumn = ({
+  title,
+  icon,
+  tasks,
+  status,
+  handleDelete,
+  setActiveCard,
+  onDrop,
+}) => {
+  return (
+    <section className="task_column">
+      <h2 className="task_column_heading">
+        <img className="task_column_icon" src={icon} alt="" /> {title}
+      </h2>
+      <DropArea onDrop={() => onDrop(status, 0)} />
+      {
+        // <>
+        tasks.map(
+          (task, index) =>
+            task.status === status && (
+              <React.Fragment key={index}>
+                <TaskCard
+                  title={task.task}
+                  tags={task.tags}
+                  handleDelete={handleDelete}
+                  index={index}
+                  setActiveCard={setActiveCard}
+                />
+                <DropArea onDrop={() => onDrop(status, index + 1)} />
+              </React.Fragment>
+            )
+        )
+        // <button type="submit">Add Task</button>
+        // {/* </> */}
+      }
+      <Button variant="primary" className="mb-3">
+        Add Card
+      </Button>
+    </section>
+  );
+};
+
+export default TaskColumn;
